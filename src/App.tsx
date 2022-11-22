@@ -1,18 +1,7 @@
-import React, { FC, ButtonHTMLAttributes } from 'react';
-import styled from 'styled-components'
+import { FC } from 'react';
 import logo from './logo.svg';
 import './App.css';
-
-interface IButton extends ButtonHTMLAttributes<HTMLElement> {
-  color: string
-}
-
-const SampleButton = styled.button<IButton>`
-  background-color: ${props => props.color};
-  border-color: ${props => props.color};
-  border-radius: 3px;
-  padding: 10px;
-`
+import { SampleButton } from './components/Button';
 
 const onClickHandler = () => {
   alert('Making sure events are working with styled-components')
@@ -26,8 +15,8 @@ const App: FC = () => {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <SampleButton color={"#33afff"} onClick={onClickHandler}>
-          Testing styled-components*
+        <SampleButton color="#33afff" onClick={onClickHandler}>
+          Testing styled-components
         </SampleButton>
         <a
           className="App-link"
