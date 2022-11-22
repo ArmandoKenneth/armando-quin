@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { FC, ButtonHTMLAttributes } from 'react';
+import styled from 'styled-components'
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+interface IButton extends ButtonHTMLAttributes<HTMLElement> {
+  color: string
+}
+
+const SampleButton = styled.button<IButton>`
+  background-color: ${props => props.color};
+  border-color: ${props => props.color};
+  border-radius: 3px;
+  padding: 10px;
+`
+
+const onClickHandler = () => {
+  alert('Making sure events are working with styled-components')
+}
+
+const App: FC = () => {
   return (
     <div className="App">
       <header className="App-header">
@@ -10,6 +26,9 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <SampleButton color={"#33afff"} onClick={onClickHandler}>
+          Testing styled-components*
+        </SampleButton>
         <a
           className="App-link"
           href="https://reactjs.org"
