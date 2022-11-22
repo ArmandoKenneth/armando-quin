@@ -1,5 +1,6 @@
 import { FC } from 'react'
 
+
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 import logo from './logo.svg'
@@ -12,7 +13,9 @@ const queryClient = new QueryClient()
 const App: FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <MainPage logo={logo} />
+      <div className="App">
+        <MainPage />
+      </div>
     </QueryClientProvider>
   );
 }

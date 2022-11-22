@@ -1,51 +1,55 @@
-import { FC, useState } from "react"
-import { useQuery, useIsFetching } from 'react-query'
+// @ts-nocheck
+import { FC, useEffect, useState } from "react"
+import axios from 'axios';
+import styled from 'styled-components'
 
-import { SampleButton } from './Button'
+import CustomMap from "./Map/CustomMap"
+import Filters from "./Filters/Filter";
 
+const MainPageWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`
 
-interface IMainPage {
-  logo: string
-}
-
-const OnClickHandler = () => {
-  alert('Making sure events are working with styled-components')
-  // const { isLoading, error, data } = useQuery('sampleDataFetching', async () => {
-  //   const res = await fetch('https://jsonplaceholder.typicode.com/todos')
-  //   const parsed = await res.json()
-  //   debugger
-  //   setSampleData(parsed)
-  // })
-}
+const today = new Date()
+const dt = new Date()
+const future = new Date(dt.setMonth(today.getMonth() + 3))
 
 
-const MainPage: FC<IMainPage> = ({ logo }) => {
-  const [sampleData, setSampleData] = useState([])
+const MainPage: FC = () => {
+  const [launches, setLaunches] = useState([])
+  const [startDate, setStartDate] = useState(today)
+  const [endDate, setEndDate] = useState(future)
 
-  const { isLoading, error, data } = useQuery('sampleDataFetching', async () => {
-    const res = await fetch('https://jsonplaceholder.typicode.com/todos')
-    const parsed = await res.json()
-    setSampleData(parsed)
-  })
+  async function fetchData(startDate, endDate) {
+    const res = await axios.get(`https://lldev.thespacedevs.com/2.2.0/launch/?window_start__gte=${startDate.toISOString()}&window_end__lte=${endDate.toISOString()}`)
+    const launches = res.data.results.map(item => {
+      const launchObj = {
+        lat: item.pad.latitude,
+        lng: item.pad.longitude,
+        id: item.id,
+        name: item.name
+      }
+      return launchObj
+    })
+    setLaunches(launches)
+  }
 
-  const isFetching = useIsFetching()
 
-  let content = (
-    <SampleButton color="#33afff" onClick={OnClickHandler}>
-      Testing styled-components
-    </SampleButton>
-  )
-  if (isFetching) {
-    content = <p>Loading...</p>
+  useEffect(() => {
+    fetchData(startDate, endDate);
+  }, [startDate, endDate])
+
+  const onFilterChange = (filterValues) => {
+    setStartDate(filterValues.startDate)
+    setEndDate(filterValues.endDate)
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        {content}
-      </header>
-    </div>
+    <MainPageWrapper>
+      <Filters onSubmitCallback={onFilterChange} />
+      <CustomMap markers={launches} />
+    </MainPageWrapper>
   )
 }
 
