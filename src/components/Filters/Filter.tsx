@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { FC } from "react"
+import { FC } from 'react'
 import styled from 'styled-components'
 
 import { DatePicker, Button, Form, Card } from 'antd';
@@ -50,23 +50,23 @@ const Filters: FC<IFilters> = (props) => {
   return (
     <FiltersWrapper>
       <Form
-        name="basic"
+        name='basic'
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
-        autoComplete="off"
+        autoComplete='off'
       >
         <Form.Item
-          label="Launch Period"
-          name="launchPeriod"
+          label='Launch Period'
+          name='launchPeriod'
         >
           <RangePicker />
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 19, span: 16 }}>
-          <Button type="primary" htmlType="submit">
+          <Button type='primary' htmlType='submit'>
             Filter
           </Button>
         </Form.Item>

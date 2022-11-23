@@ -1,11 +1,10 @@
-// @ts-nocheck
-import { FC, SetStateAction, useEffect, useState } from "react"
-import styled from 'styled-components'
-import axios from 'axios'
+import { FC, useEffect, useState } from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
 
 
-import CustomMap from "./Map/CustomMap"
-import Filters from "./Filters/Filter";
+import CustomMap from './Map/CustomMap';
+import Filters from './Filters/Filter';
 
 interface ILaunchResponse {
   pad: { latitude: number; longitude: number; name: string; }
@@ -55,12 +54,12 @@ const MainPage: FC = () => {
     fetchData(startDate, endDate);
   }, [startDate, endDate])
 
-  const onFilterChange = (filterValues: { startDate: SetStateAction<Date>; endDate: SetStateAction<Date>; }) => {
+  const onFilterChange = (filterValues: { startDate: Date; endDate: Date; }) => {
     setStartDate(filterValues.startDate)
     setEndDate(filterValues.endDate)
   }
 
-  const onMarkerClick = (markerProps: SetStateAction<null>) => {
+  const onMarkerClick = (markerProps: any) => {
     setSelectedLaunch(markerProps)
   }
 

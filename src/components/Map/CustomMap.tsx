@@ -1,7 +1,7 @@
 // @ts-nocheck
 //  Added the no check here because I did not have time to build proper types for the maps library
 // elements
-import { FC, SetStateAction, useState } from "react";
+import { FC, SetStateAction, useState } from 'react';
 import { GoogleApiWrapper, Map, Marker, InfoWindow } from 'google-maps-react';
 
 interface ICustomMap {
