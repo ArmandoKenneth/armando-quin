@@ -89,10 +89,4 @@ const Filters: FC<IFilters> = (props) => {
   )
 }
 
-
-// name, 
-// time of launch, 
-// name of the launch pad and 
-// the agencies that are collaborating on the launch.
-
 export default Filters

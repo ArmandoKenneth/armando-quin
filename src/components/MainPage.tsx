@@ -34,7 +34,6 @@ const MainPage: FC = () => {
   async function fetchData(startDate: Date, endDate: Date) {
     const res = await axios.get(`https://lldev.thespacedevs.com/2.2.0/launch/?window_start__gte=${startDate.toISOString()}&window_end__lte=${endDate.toISOString()}`)
     const launches = res.data.results.map((item: ILaunchResponse) => {
-      // Missing agencies
       const launchObj = {
         lat: item.pad.latitude,
         lng: item.pad.longitude,
