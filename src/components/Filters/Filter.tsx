@@ -2,7 +2,7 @@
 import { FC } from "react"
 import styled from 'styled-components'
 
-import { DatePicker, Button, Checkbox, Form, Input, Card } from 'antd';
+import { DatePicker, Button, Form, Card } from 'antd';
 
 const { RangePicker } = DatePicker;
 
@@ -24,11 +24,12 @@ const Label = styled.div``
 
 const Value = styled.div``
 
-const ClearSelectionLink = styled.span`
-  color:  #f76464;
-`
+interface IFilters {
+  onSubmitCallback: ({ startDate: Date, endDate: Date }) => void,
+  selectedLaunch: any
+}
 
-const Filters: FC = (props) => {
+const Filters: FC<IFilters> = (props) => {
   const { onSubmitCallback, selectedLaunch } = props
 
   const onFinish = (values: any) => {
@@ -70,7 +71,7 @@ const Filters: FC = (props) => {
           </Button>
         </Form.Item>
       </Form>
-    
+
       <SelectedLaunchWrapper>
         <Card title={cardTitle} style={{ height: 300 }}>
           {selectedLaunch && (<><Item>

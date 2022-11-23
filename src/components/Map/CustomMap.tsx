@@ -1,19 +1,28 @@
 // @ts-nocheck
-import { FC, useState } from "react";
+//  Added the no check here because I did not have time to build proper types for the maps library
+// elements
+import { FC, SetStateAction, useState } from "react";
 import { GoogleApiWrapper, Map, Marker, InfoWindow } from 'google-maps-react';
 
-// TODO: center on first item in the marker list
 interface ICustomMap {
-  markers: { lat: number, lng: number, address: string }[]
+  markers: {
+    id: string,
+    name: string,
+    lat: number,
+    lng: number,
+    address: string
+  }[],
+  google: any,
+  onMarkerClickCallback: (props: any) => void
 }
 
 const CustomMap: FC<ICustomMap> = (props) => {
   const { google, markers, onMarkerClickCallback } = props
 
   const [selectedMarker, setSelectedMarker] = useState(null)
-  const [selectedLocationDetails, setSelectedLocationDetails] = useState(null)
+  const [selectedLocationDetails, setSelectedLocationDetails] = useState<any>(null)
 
-  const onMarkerClick = (props, marker) => {
+  const onMarkerClick = (props: SetStateAction<null>, marker: SetStateAction<null>) => {
     setSelectedMarker(marker)
     setSelectedLocationDetails(props)
     onMarkerClickCallback(props)
@@ -25,11 +34,6 @@ const CustomMap: FC<ICustomMap> = (props) => {
     onMarkerClickCallback(null)
   }
 
-  const onInfoWindowClose = () => {
-    cleanUpSelection()
-  }
-
-
   const center = { lat: 0, lng: 0 }
   if (markers.length > 0) {
     center.lat = markers[0].lat
@@ -37,7 +41,6 @@ const CustomMap: FC<ICustomMap> = (props) => {
   }
 
   return (
-    // <div style={{ height: '100vh', width: '100%' }}>
     <Map google={google} zoom={5} style={{ width: '78vw' }} center={center} initialCenter={center}>
       {
         markers.map((mark) => {
@@ -52,7 +55,7 @@ const CustomMap: FC<ICustomMap> = (props) => {
         })
       }
 
-      {selectedMarker && (<InfoWindow
+      {selectedLocationDetails && (<InfoWindow
         marker={selectedMarker}
         visible={!!selectedMarker}
         onClose={cleanUpSelection}>
