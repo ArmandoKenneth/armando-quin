@@ -2,7 +2,7 @@
 import { FC } from "react"
 import styled from 'styled-components'
 
-import { DatePicker, Button, Checkbox, Form, Input } from 'antd';
+import { DatePicker, Button, Checkbox, Form, Input, Card } from 'antd';
 
 const { RangePicker } = DatePicker;
 
@@ -10,10 +10,26 @@ const { RangePicker } = DatePicker;
 const FiltersWrapper = styled.div`
   width: 350px;
   padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+`
+
+const SelectedLaunchWrapper = styled.div``
+
+const Item = styled.div``
+
+const Label = styled.div``
+
+const Value = styled.div``
+
+const ClearSelectionLink = styled.span`
+  color:  #f76464;
 `
 
 const Filters: FC = (props) => {
-  const { onSubmitCallback, startDate, endDate } = props
+  const { onSubmitCallback, selectedLaunch } = props
 
   const onFinish = (values: any) => {
     if (onSubmitCallback) {
@@ -27,6 +43,8 @@ const Filters: FC = (props) => {
   const onFinishFailed = (errorInfo: any) => {
     console.log(errorInfo)
   }
+
+  const cardTitle = selectedLaunch ? selectedLaunch.title : 'Select a launch in the map'
 
   return (
     <FiltersWrapper>
@@ -52,8 +70,28 @@ const Filters: FC = (props) => {
           </Button>
         </Form.Item>
       </Form>
+    
+      <SelectedLaunchWrapper>
+        <Card title={cardTitle} style={{ height: 300 }}>
+          {selectedLaunch && (<><Item>
+            <Label>Window for launch: </Label>
+            <Value>{selectedLaunch.launchStartDate} - {selectedLaunch.launchEndDate}</Value>
+          </Item>
+
+            <Item>
+              <Label>Pad used: </Label>
+              <Value>{selectedLaunch.padName}</Value>
+            </Item></>)}
+        </Card>
+      </SelectedLaunchWrapper>
     </FiltersWrapper>
   )
 }
+
+
+// name, 
+// time of launch, 
+// name of the launch pad and 
+// the agencies that are collaborating on the launch.
 
 export default Filters
